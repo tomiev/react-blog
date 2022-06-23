@@ -1,0 +1,22 @@
+{
+  "blogs": [
+    {
+      "title": "My First Blog",
+      "body": "Lorem ipsum dolor sit amet...",
+      "author": "Mario",
+      "id": 1
+    },
+    {
+      "title": "Understanding Layout Algorithms",
+      "body": "Lorem ipsum dolor sit amet...",
+      "author": "Luigi",
+      "id": 2
+    },
+    {
+      "title": "Building Scalable Websites with React",
+      "body": "Lorem ipsum dolor sit amet...",
+      "author": "Daisy",
+      "id": 3
+    }
+  ]
+}

@@ -3,11 +3,7 @@ import { useEffect } from "react";
 import BlogList from './BlogList';
 
 const Home = () => {
-  const [blogs, setBlogs] = useState([
-    { title: 'My New Website', body: 'Lorem ipsum dolor sit amet...', author: 'Mario', id: 1 },
-    { title: 'Understanding Layout Algorithms', body: 'Lorem ipsum dolor sit amet', author: 'Luigi', id: 2 },
-    { title: 'Building Scalable Websites with React', body: 'Lorem ipsum dolor sit amet', author: 'Daisy', id: 3 }
-  ]);
+  const [blogs, setBlogs] = useState(null);
 
   const handleDelete = (id) => {
     const newBlogs = blogs.filter(blog => blog.id !== id);
@@ -15,12 +11,18 @@ const Home = () => {
   }
 
   useEffect(() => {
-    console.log('ran use effect');
-  })
+    fetch('http://localhost:8000/blogs')
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        setBlogs(data);
+      })
+  }, [])
 
   return (
     <div className="home">
-      <BlogList blogs={blogs} title='All blogs' handleDelete={handleDelete} />
+      {blogs && <BlogList blogs={blogs} title='All blogs' handleDelete={handleDelete} />}
     </div>
    );
 }
