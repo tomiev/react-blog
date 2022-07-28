@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const Create = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [author, setAuthor] = useState('Mario');
   const [isPending, setIsPending] = useState(false);
+  const history = useHistory();
 
   /* Handle 'Add blog' clicks */
   const handleSubmit = (e) => {
@@ -20,6 +22,7 @@ const Create = () => {
       body: JSON.stringify(blog)
     }).then(() => {
       setIsPending(false);
+      history.push('/'); /* Returns to home page after user submits form */
     })
   }
 
@@ -47,6 +50,7 @@ const Create = () => {
         >
           <option value="Mario">Mario</option>
           <option value="Yoshi">Yoshi</option>
+          <option value="Daisy">Daisy</option>
         </select>
         { !isPending && <button>Add Blog</button>}
         { isPending && <button disabled>Adding Blog</button>}
