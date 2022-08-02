@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { db } from "./Firebase";
+import { addDoc, collection } from "@firebase/firestore"
 
 const Create = () => {
   const [title, setTitle] = useState('');
@@ -7,23 +9,33 @@ const Create = () => {
   const [author, setAuthor] = useState('Mario');
   const [isPending, setIsPending] = useState(false);
   const history = useHistory();
+  const ref = collection(db, "blogs");
 
   /* Handle 'Add blog' clicks */
   const handleSubmit = (e) => {
-    e.preventDefault(); /* Prevents default behaviour of button (which is to refresh the page) */
+    e.preventDefault(); // Prevents default behaviour of button (which is to refresh the page)
     const blog = { title, body, author };
 
     setIsPending(true);
 
+    try {
+      addDoc(ref, blog);
+    } catch (e) {
+      console.log(e);
+    };
+
+    setIsPending(false);
+    history.push('/'); // Returns home after form submits
+
     /* Submit POST request */
-    fetch('http://localhost:8000/blogs', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json"},
-      body: JSON.stringify(blog)
-    }).then(() => {
-      setIsPending(false);
-      history.push('/'); /* Returns to home page after user submits form */
-    })
+    // fetch('http://localhost:8000/blogs', {
+    //   method: 'POST',
+    //   headers: { "Content-Type": "application/json"},
+    //   body: JSON.stringify(blog)
+    // }).then(() => {
+    //   setIsPending(false);
+    //   history.push('/'); /* Returns to home page after user submits form */
+    // })
   }
 
   return (
